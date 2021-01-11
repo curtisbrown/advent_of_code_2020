@@ -8,26 +8,21 @@ import (
 
 var lineLength int = 31
 
-func partA(input []string) {
+func treeCount(input []string, xCoord int, yCoord int) int {
 
 	treeCount := 0
 	lineIdx := 0
+	for i := 0; i < len(input)-yCoord; i = i + yCoord {
 
-	for i := 0; i < len(input)-1; i++ {
-
-		lineIdx = (lineIdx + 3) % 31
-		println("Line Index: ", lineIdx, "    Value: ", string(input[i+1][lineIdx]))
-		if string(input[i+1][lineIdx]) == "#" {
+		lineIdx = (lineIdx + xCoord) % 31
+		// println("(", lineIdx, ",", i, ")", "    Value: ", string(input[i+yCoord][lineIdx]))
+		if string(input[i+yCoord][lineIdx]) == "#" {
 			treeCount++
 		}
 
 	}
 	println("String Count: ", treeCount)
-}
-
-func partB(input []string) {
-
-	println("Part 2 String Count: ")
+	return treeCount
 }
 
 func main() {
@@ -52,7 +47,11 @@ func main() {
 	// Remove first entry as its empty
 	lines = lines[1:]
 
-	partA(lines)
+	ret1 := treeCount(lines, 1, 1)
+	ret2 := treeCount(lines, 3, 1)
+	ret3 := treeCount(lines, 5, 1)
+	ret4 := treeCount(lines, 7, 1)
+	ret5 := treeCount(lines, 1, 2)
 
-	partB(lines)
+	println("Total Trees: ", ret1*ret2*ret3*ret4*ret5)
 }
